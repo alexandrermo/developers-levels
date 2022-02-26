@@ -4,8 +4,19 @@
     flex-direction: column;
 }
 
+.contentContainer {
+    height: 100%;
+    flex-grow: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.pageComponentDiv {
+    flex-grow: 1;
+}
+
 .mainContentContainer {
-    flex: 1 1 0;
     overflow: auto;
 }
 

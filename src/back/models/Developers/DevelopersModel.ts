@@ -14,12 +14,19 @@ class DevelopersModel extends Model<
     InferCreationAttributes<DevelopersModel, { omit: 'level' }>
 > {
     declare id: CreationOptional<number>;
+
     declare name: string;
+
     declare sex: string;
+
     declare birthday: Date;
+
     declare hobby: string | null;
+
     declare created_at: CreationOptional<Date>;
+
     declare updated_at: CreationOptional<Date | null>;
+
     declare level?: NonAttribute<LevelsModel>;
 }
 

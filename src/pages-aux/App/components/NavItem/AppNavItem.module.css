@@ -1,0 +1,9 @@
+.navAnchor {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.navAnchor:hover {
+    color: var(--secondary-color);
+}

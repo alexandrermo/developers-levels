@@ -8,12 +8,14 @@ body {
     font-size: 1.25rem;
     line-height: 1.5;
     --primary-color: #1976d2;
+    --secondary-color: #993300;
     --background-color: #e6e6e6;
     --surface-color: white;
     --divider-color: #b3b3b3;
-    --text-color: black
+    --text-color: black;
+    --primary-text-color: white;
     background-color: var(--background-color);
-    color: var(--text-color)
+    color: var(--text-color);
 }
 
 a {

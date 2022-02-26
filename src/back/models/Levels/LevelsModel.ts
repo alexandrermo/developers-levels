@@ -12,8 +12,11 @@ class LevelsModel extends Model<
     InferCreationAttributes<LevelsModel>
 > {
     declare id: CreationOptional<number>;
+
     declare description: string;
+
     declare created_at: CreationOptional<Date>;
+
     declare updated_at: CreationOptional<Date | null>;
 }
 
