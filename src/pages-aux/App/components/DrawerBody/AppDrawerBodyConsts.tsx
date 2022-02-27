@@ -5,11 +5,11 @@ export const navItems = [
     {
         text: 'Desenvolvedores',
         icon: <MyPersonOutlinedIcon />,
-        page: ''
+        page: '/developers'
     },
     {
         text: 'Níveis',
         icon: <MyAssessmentOutlinedIcon />,
-        page: ''
+        page: '/levels'
     }
 ];

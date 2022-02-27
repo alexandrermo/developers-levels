@@ -15,7 +15,7 @@ const Home: NextPage = () => {
             <Head>
                 <title>Teste Gazin</title>
                 <meta name="description" content="Teste Gazin" />
-                <link rel="icon" href="/favicon.ico" />
+                {/* <link rel="icon" href="/favicon.ico" /> */}
             </Head>
 
             <main>

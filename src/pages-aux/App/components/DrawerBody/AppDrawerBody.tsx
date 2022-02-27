@@ -8,7 +8,7 @@ import MyTypography from '../../../../front/general-components/MyTypography/MyTy
 import {
     backgroundColor,
     primaryColor
-} from '../../../../front/consts/themeConsts';
+} from '../../../../front/consts/theme/themeConsts';
 
 const AppDrawerBody = () => (
     <div>

@@ -23,10 +23,6 @@ class DevelopersModel extends Model<
 
     declare hobby: string | null;
 
-    declare created_at: CreationOptional<Date>;
-
-    declare updated_at: CreationOptional<Date | null>;
-
     declare level?: NonAttribute<LevelsModel>;
 }
 
@@ -52,28 +48,29 @@ DevelopersModel.init(
         },
         hobby: {
             type: DataTypes.STRING(100)
-        },
-        created_at: {
-            type: DataTypes.DATE
-        },
-        updated_at: {
-            type: DataTypes.DATE
         }
     },
     {
         sequelize,
-        tableName: 'developers',
-        timestamps: false
+        tableName: 'developers'
     }
 );
 
+const foreignKey = {
+    name: 'levelId',
+    allowNull: false
+};
+
+const aliasLevels = 'level';
+
 LevelsModel.hasMany(DevelopersModel, {
     sourceKey: 'id',
-    foreignKey: {
-        name: 'level_id',
-        allowNull: false
-    },
-    as: 'level'
+    foreignKey,
+    as: aliasLevels
+});
+DevelopersModel.belongsTo(LevelsModel, {
+    foreignKey,
+    as: aliasLevels
 });
 
 export default DevelopersModel;
