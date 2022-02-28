@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import ExceptionBibli from '../../back/biblis/Exception/ExceptionBibli';
-
 import RouteBibli from '../../back/biblis/Route/RouteBibli';
-import DevelopersController from '../../back/controllers/Developers/DevelopersController';
+import LevelsController from '../../back/controllers/Levels/LevelsController';
 
 export default async function handler(
     req: NextApiRequest,
@@ -11,11 +9,16 @@ export default async function handler(
 ) {
     try {
         await RouteBibli.callController(req, res, {
-            get: DevelopersController.get,
-            post: DevelopersController.post,
-            delete: DevelopersController.delete
+            get: LevelsController.get,
+            post: LevelsController.post,
+            delete: LevelsController.delete
         });
     } catch (error) {
-        ExceptionBibli.sendResponseError(res, error);
+        ExceptionBibli.sendResponseError(res, error, {
+            delete: {
+                associateItemLabel: 'desenvolvedores',
+                toDeleteItemsLabel: 'os níveis'
+            }
+        });
     }
 }

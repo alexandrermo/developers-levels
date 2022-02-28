@@ -61,16 +61,14 @@ const foreignKey = {
     allowNull: false
 };
 
-const aliasLevels = 'level';
-
 LevelsModel.hasMany(DevelopersModel, {
     sourceKey: 'id',
     foreignKey,
-    as: aliasLevels
+    as: 'developers'
 });
 DevelopersModel.belongsTo(LevelsModel, {
     foreignKey,
-    as: aliasLevels
+    as: 'level'
 });
 
 export default DevelopersModel;

@@ -53,7 +53,7 @@ export default class DevelopersController {
             fields: ['birthday', 'name', 'hobby', 'sex', 'levelId']
         });
 
-        res.status(200).json(developer);
+        res.status(201).json(developer);
     }
 
     public static async putWithId(req: NextApiRequest, res: NextApiResponse) {
@@ -70,6 +70,6 @@ export default class DevelopersController {
             where: { id: JSON.parse(req.body) }
         });
 
-        res.status(200).json(developers);
+        res.status(204).json(developers);
     }
 }

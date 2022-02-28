@@ -14,5 +14,11 @@ export const levelsFields: Fields = {
         form: {
             required: true
         }
+    },
+    'developers.length': {
+        label: 'Quantidade Desenvolvedores',
+        form: {
+            hidden: true
+        }
     }
 };

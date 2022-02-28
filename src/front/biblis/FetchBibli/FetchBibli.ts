@@ -13,6 +13,12 @@ export default class FetchBibli {
 
     private static async api(url: string, init?: RequestInit) {
         const res = await FetchBibli.fetch(`/api/${url}`, init);
+
+        if (res.status > 399) {
+            const jsonError = await res.json();
+            throw new Error(jsonError.error);
+        }
+
         return res;
     }
 
@@ -27,13 +33,10 @@ export default class FetchBibli {
     }
 
     public static async apiDeleteJson(entity: string, body: GenericObject) {
-        const response = await FetchBibli.api(entity, {
+        await FetchBibli.api(entity, {
             body: JSON.stringify(body),
             method: 'DELETE'
         });
-        const json = await response.json();
-
-        return json;
     }
 
     public static async apiPutWithIdJson(

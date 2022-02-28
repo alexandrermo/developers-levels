@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import * as Yup from 'Yup';
 import { Formik, Form } from 'formik';
+import { useSnackbar } from 'notistack';
 import { SingleItem } from '../../../common/types/commonEndpointTypes';
 import useEffectOnFirstRender from '../../hooks/useEffectOnFirstRender';
 import LoadingOnMiddle from '../LoadingOnMiddle/LoadingOnMiddle';
@@ -32,6 +33,8 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
     const { fields, endpoints, label, entity } = props;
     const { post, putWithId } = endpoints;
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const formFieldsEntries = Object.entries(fields).filter(
         ([, fieldItem]) => !fieldItem.form?.hidden
     );
@@ -57,15 +60,24 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
                 setLoading(true);
                 if (isNew) {
                     await post(values);
+                    enqueueSnackbar(`${label} criado com sucesso`, {
+                        variant: 'success'
+                    });
                 } else {
                     await putWithId(values, id);
+                    enqueueSnackbar(`${label} alterado com sucesso`, {
+                        variant: 'success'
+                    });
                 }
                 router.push(`/${entity}`);
-            } catch {
+            } catch (error) {
+                if (error?.message) {
+                    enqueueSnackbar(error.message, { variant: 'error' });
+                }
                 setLoading(false);
             }
         },
-        [isNew, id, post, putWithId, router, entity]
+        [isNew, id, post, putWithId, router, entity, enqueueSnackbar, label]
     );
 
     useEffectOnFirstRender(async () => {
@@ -164,9 +176,6 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
         },
         {}
     );
-
-    console.log({ initialValues });
-    console.log({ databaseItem });
 
     return (
         <Formik

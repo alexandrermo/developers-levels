@@ -3,6 +3,7 @@ import '../pages-aux/globals/globals.css';
 import type { AppProps } from 'next/app';
 import { useCallback, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 import { setLocale } from 'yup';
 import styles from '../pages-aux/App/App.module.css';
 import AppAppBar from '../pages-aux/App/components/AppBar/AppAppBar';
@@ -48,38 +49,40 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     }, [mobileOpen]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <div className={styles.container}>
-                <MyBox
-                    sx={{
-                        height: `calc(100vh - ${footerHeight}px)`,
-                        overflow: 'auto'
-                    }}
-                >
-                    <AppAppBar toggleMobileOpen={toggleMobileOpen} />
-                    <AppDrawer
-                        toggleMobileOpen={toggleMobileOpen}
-                        mobileOpen={mobileOpen}
-                    />
+        <SnackbarProvider>
+            <ThemeProvider theme={theme}>
+                <div className={styles.container}>
                     <MyBox
-                        className={styles.contentContainer}
                         sx={{
-                            width: { sm: `calc(100% - ${drawerWidth}px)` },
-                            ml: { sm: `${drawerWidth}px` }
+                            height: `calc(100vh - ${footerHeight}px)`,
+                            overflow: 'auto'
                         }}
                     >
-                        <MyToolbar />
-                        <div className={styles.pageComponentDiv}>
-                            <Component {...pageProps} />
-                        </div>
+                        <AppAppBar toggleMobileOpen={toggleMobileOpen} />
+                        <AppDrawer
+                            toggleMobileOpen={toggleMobileOpen}
+                            mobileOpen={mobileOpen}
+                        />
+                        <MyBox
+                            className={styles.contentContainer}
+                            sx={{
+                                width: { sm: `calc(100% - ${drawerWidth}px)` },
+                                ml: { sm: `${drawerWidth}px` }
+                            }}
+                        >
+                            <MyToolbar />
+                            <div className={styles.pageComponentDiv}>
+                                <Component {...pageProps} />
+                            </div>
+                        </MyBox>
                     </MyBox>
-                </MyBox>
 
-                <footer className={styles.footer}>
-                    <span>Alguma empresa legal</span>
-                </footer>
-            </div>
-        </ThemeProvider>
+                    <footer className={styles.footer}>
+                        <span>Alguma empresa legal</span>
+                    </footer>
+                </div>
+            </ThemeProvider>
+        </SnackbarProvider>
     );
 };
 
