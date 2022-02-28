@@ -56,5 +56,7 @@ export default class DevelopersController {
         res.status(200).json(responseJson);
     }
 
-    static async getWithId(req: NextApiRequest, res: NextApiResponse) {}
+    static async getWithId(req: NextApiRequest, res: NextApiResponse) {
+        return req;
+    }
 }
