@@ -6,10 +6,12 @@ const DevelopersId = () => (
     <DatabaseItemForm
         endpoints={{
             post: DevelopersEndpoint.post,
-            getWithId: DevelopersEndpoint.getWithId
+            getWithId: DevelopersEndpoint.getWithId,
+            putWithId: DevelopersEndpoint.putWihtId
         }}
         fields={developersFields}
         label="Desenvolvedor"
+        entity="developers"
     />
 );
 

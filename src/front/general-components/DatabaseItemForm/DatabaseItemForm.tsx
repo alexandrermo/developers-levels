@@ -25,10 +25,11 @@ interface Props {
         putWithId: (values: GenericObject, id: string) => Promise<void>;
     };
     label: string;
+    entity: string;
 }
 
 const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
-    const { fields, endpoints, label } = props;
+    const { fields, endpoints, label, entity } = props;
     const { post, putWithId } = endpoints;
 
     const formFieldsEntries = Object.entries(fields).filter(
@@ -37,6 +38,7 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
 
     const router = useRouter();
     const id = router.query.id as string;
+
     const isNew = id === 'new';
     const hasFieldWithApi = formFieldsEntries.some(
         DatabaseItemFormBibli.checkFieldEntrieIsWithApi
@@ -58,11 +60,12 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
                 } else {
                     await putWithId(values, id);
                 }
-            } finally {
+                router.push(`/${entity}`);
+            } catch {
                 setLoading(false);
             }
         },
-        [isNew, id, post, putWithId]
+        [isNew, id, post, putWithId, router, entity]
     );
 
     useEffectOnFirstRender(async () => {
@@ -161,6 +164,9 @@ const DatabaseItemForm: React.FunctionComponent<Props> = (props) => {
         },
         {}
     );
+
+    console.log({ initialValues });
+    console.log({ databaseItem });
 
     return (
         <Formik

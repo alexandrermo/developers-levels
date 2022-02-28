@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { GenericObject } from '../common/types/objectTypes';
 import DevelopersEndpoint from '../front/endpoints/Developers/DevelopersEndpoint';
 import CrudTable from '../front/general-components/CrudTable/CrudTable';
-import { ApiGetResponse } from '../common/types/commonEndpointTypes';
+import { ApiGetResponse, Items } from '../common/types/commonEndpointTypes';
 import CrudScreen from '../front/general-components/CrudScreen/CrudScreen';
 import { developersEntity } from '../front/consts/developers/developersConts';
 
@@ -11,6 +11,7 @@ const Developers = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalQuantityOfItems, setTotalQuantityOfItems] = useState<number>();
+    const [selectedItems, setSelectedItems] = useState<Items>([]);
 
     const updateStatesFromResponse = useCallback(
         (response: ApiGetResponse) => {
@@ -30,6 +31,9 @@ const Developers = () => {
             updateStatesFromResponse={updateStatesFromResponse}
             title="Desenvolvedores"
             entity={developersEntity}
+            selectedItems={selectedItems}
+            endpointDelete={DevelopersEndpoint.delete}
+            setLoading={setLoading}
         >
             <CrudTable
                 currentPage={currentPage}
@@ -46,6 +50,8 @@ const Developers = () => {
                 setLoading={setLoading}
                 totalQuantityOfItems={totalQuantityOfItems}
                 updateStatesFromResponse={updateStatesFromResponse}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
             />
         </CrudScreen>
     );

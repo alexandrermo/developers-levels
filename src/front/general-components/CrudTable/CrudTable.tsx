@@ -4,9 +4,9 @@ import {
     TableContainer,
     TablePagination
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { itemsPerPage } from '../../../common/page/pageConsts';
-import { Items } from '../../../common/types/commonEndpointTypes';
+import { Items, SingleItem } from '../../../common/types/commonEndpointTypes';
 import {
     Fields,
     UpdateStatesFromResponse
@@ -25,6 +25,8 @@ interface Props {
     currentPage: number;
     totalQuantityOfItems: number | undefined;
     updateStatesFromResponse: UpdateStatesFromResponse;
+    selectedItems: SingleItem[];
+    setSelectedItems: Dispatch<SetStateAction<Items>>;
 }
 
 const CrudTable: React.FunctionComponent<Props> = (props) => {
@@ -36,14 +38,15 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
         setLoading,
         currentPage,
         totalQuantityOfItems,
-        updateStatesFromResponse
+        updateStatesFromResponse,
+        selectedItems,
+        setSelectedItems
     } = props;
 
     const tableFieldsEntries = Object.entries(fields).filter(
         ([, fieldItem]) => !fieldItem.table?.hidden
     );
 
-    const [selectedItems, setSelectedItems] = useState<Items>([]);
     const [order, setOrder] = useState<Order>({});
 
     const onPageChange = useCallback(
@@ -84,7 +87,7 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                 return newSelectedItems;
             });
         },
-        [idProperty]
+        [idProperty, setSelectedItems]
     );
 
     return (
@@ -93,7 +96,6 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                 <Table size="medium">
                     <CrudTableHead
                         items={items}
-                        fields={fields}
                         fieldsEntries={tableFieldsEntries}
                         selectedItems={selectedItems}
                         setSelectedItems={setSelectedItems}

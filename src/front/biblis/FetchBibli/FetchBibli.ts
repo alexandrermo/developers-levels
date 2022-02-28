@@ -26,6 +26,30 @@ export default class FetchBibli {
         return json;
     }
 
+    public static async apiDeleteJson(entity: string, body: GenericObject) {
+        const response = await FetchBibli.api(entity, {
+            body: JSON.stringify(body),
+            method: 'DELETE'
+        });
+        const json = await response.json();
+
+        return json;
+    }
+
+    public static async apiPutWithIdJson(
+        entity: string,
+        id: string | number,
+        body: GenericObject
+    ) {
+        const response = await FetchBibli.api(`${entity}/${id}`, {
+            body: JSON.stringify(body),
+            method: 'PUT'
+        });
+        const json = await response.json();
+
+        return json;
+    }
+
     public static async apiGetJson<T extends GenericObject = GenericObject>(
         entity: string,
         options?: ApiGetOptions

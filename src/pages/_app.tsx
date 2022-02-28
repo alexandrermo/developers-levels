@@ -11,7 +11,10 @@ import AppDrawer from '../pages-aux/App/components/Drawer/AppDrawer';
 import MyBox from '../front/general-components/MyBox/MyBox';
 import { drawerWidth, footerHeight } from '../pages-aux/App/AppConsts';
 import MyToolbar from '../front/general-components/MyToolbar/MyToolbar';
-import { primaryColor } from '../front/consts/theme/themeConsts';
+import {
+    primaryColor,
+    secondaryColor
+} from '../front/consts/theme/themeConsts';
 
 setLocale({
     mixed: {
@@ -30,6 +33,9 @@ const theme = createTheme({
     palette: {
         primary: {
             main: primaryColor
+        },
+        secondary: {
+            main: secondaryColor
         }
     }
 });

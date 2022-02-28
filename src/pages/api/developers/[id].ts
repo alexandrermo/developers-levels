@@ -9,7 +9,8 @@ export default async function handler(
 ) {
     try {
         await RouteBibli.callController(req, res, {
-            get: DevelopersController.getWithId
+            get: DevelopersController.getWithId,
+            put: DevelopersController.putWithId
         });
     } catch (error) {
         ExceptionBibli.sendResponseError(res, error);

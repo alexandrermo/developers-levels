@@ -10,7 +10,8 @@ export default async function handler(
     try {
         await RouteBibli.callController(req, res, {
             get: DevelopersController.get,
-            post: DevelopersController.post
+            post: DevelopersController.post,
+            delete: DevelopersController.delete
         });
     } catch (error) {
         ExceptionBibli.sendResponseError(res, error);

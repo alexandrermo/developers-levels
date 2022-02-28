@@ -1,6 +1,9 @@
 import { Button, Card, CardContent } from '@mui/material';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect } from 'react';
+import { SingleItem } from '../../../common/types/commonEndpointTypes';
+import { GenericObject } from '../../../common/types/objectTypes';
 import useIsFirstRender from '../../hooks/useIsFirstRender';
 import { UpdateStatesFromResponse } from '../../types/crudComponentsTypes';
 import { ApiGet } from '../../types/frontEndpointTypes';
@@ -15,6 +18,9 @@ interface Props {
     updateStatesFromResponse: UpdateStatesFromResponse;
     title: string;
     entity: string;
+    selectedItems: SingleItem[];
+    endpointDelete: (body: GenericObject) => Promise<void>;
+    setLoading: (loading: boolean) => void;
 }
 
 const CrudScreen: React.FunctionComponent<Props> = (props) => {
@@ -25,10 +31,25 @@ const CrudScreen: React.FunctionComponent<Props> = (props) => {
         children,
         updateStatesFromResponse,
         title,
-        entity
+        entity,
+        selectedItems,
+        setLoading,
+        endpointDelete
     } = props;
 
+    const router = useRouter();
+
     const isFirstRender = useIsFirstRender();
+
+    const onPressDelete = useCallback(async () => {
+        try {
+            setLoading(true);
+            await endpointDelete(selectedItems.map((item) => item.id));
+            router.reload();
+        } catch {
+            setLoading(false);
+        }
+    }, [endpointDelete, selectedItems, setLoading, router, entity]);
 
     useEffect(() => {
         if (isFirstRender) {
@@ -46,11 +67,30 @@ const CrudScreen: React.FunctionComponent<Props> = (props) => {
     return (
         <Card className={styles.card}>
             <MyCardHeader title={title}>
-                <Link href={`${entity}/new`}>
-                    <a>
-                        <Button color="primary">Novo</Button>
-                    </a>
-                </Link>
+                <div>
+                    <Link href={`${entity}/new`}>
+                        <a>
+                            <Button color="primary">Novo</Button>
+                        </a>
+                    </Link>
+                    <Link href={`${entity}/${selectedItems[0]?.id}`}>
+                        <a>
+                            <Button
+                                color="secondary"
+                                disabled={selectedItems.length !== 1}
+                            >
+                                Alterar
+                            </Button>
+                        </a>
+                    </Link>
+                    <Button
+                        color="error"
+                        disabled={!selectedItems.length}
+                        onClick={onPressDelete}
+                    >
+                        Excluir
+                    </Button>
+                </div>
             </MyCardHeader>
             <CardContent>{children}</CardContent>
         </Card>

@@ -41,7 +41,7 @@ export default class DevelopersController {
     static async getWithId(req: NextApiRequest, res: NextApiResponse) {
         const id = req.query.id as string;
 
-        const developer = DevelopersModel.findByPk(id as string, {
+        const developer = await DevelopersModel.findByPk(id as string, {
             include: 'level'
         });
 
@@ -54,5 +54,22 @@ export default class DevelopersController {
         });
 
         res.status(200).json(developer);
+    }
+
+    public static async putWithId(req: NextApiRequest, res: NextApiResponse) {
+        const developer = await DevelopersModel.update(JSON.parse(req.body), {
+            fields: ['birthday', 'name', 'hobby', 'sex', 'levelId'],
+            where: { id: req.query.id }
+        });
+
+        res.status(200).json(developer);
+    }
+
+    public static async delete(req: NextApiRequest, res: NextApiResponse) {
+        const developers = await DevelopersModel.destroy({
+            where: { id: JSON.parse(req.body) }
+        });
+
+        res.status(200).json(developers);
     }
 }
