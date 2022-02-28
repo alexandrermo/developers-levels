@@ -39,6 +39,10 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
         updateStatesFromResponse
     } = props;
 
+    const tableFieldsEntries = Object.entries(fields).filter(
+        ([, fieldItem]) => !fieldItem.table?.hidden
+    );
+
     const [selectedItems, setSelectedItems] = useState<Items>([]);
     const [order, setOrder] = useState<Order>({});
 
@@ -90,6 +94,7 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                     <CrudTableHead
                         items={items}
                         fields={fields}
+                        fieldsEntries={tableFieldsEntries}
                         selectedItems={selectedItems}
                         setSelectedItems={setSelectedItems}
                         order={order}
@@ -104,7 +109,7 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                                 selectedItems={selectedItems}
                                 idProperty={idProperty}
                                 onClickRow={onClickRow}
-                                fields={fields}
+                                fieldEntries={tableFieldsEntries}
                             />
                         ))}
                     </TableBody>

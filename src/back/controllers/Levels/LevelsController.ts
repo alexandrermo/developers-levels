@@ -4,8 +4,9 @@ import sequelize from '../../database/database';
 import DevelopersModel from '../../models/Developers/DevelopersModel';
 import { ApiGetResponse } from '../../../common/types/commonEndpointTypes';
 import QueryBibli from '../../biblis/Query/QueryBibli';
+import LevelsModel from '../../models/Levels/LevelsModel';
 
-export default class DevelopersController {
+export default class LevelsController {
     static async get(
         req: NextApiRequest,
         res: NextApiResponse<ApiGetResponse>
@@ -49,10 +50,16 @@ export default class DevelopersController {
     }
 
     public static async post(req: NextApiRequest, res: NextApiResponse) {
-        const developer = await DevelopersModel.create(JSON.parse(req.body), {
-            fields: ['birthday', 'name', 'hobby', 'sex', 'levelId']
+        const developer = await DevelopersModel.create(req.body, {
+            fields: ['birthday', 'name', 'hobby', 'sex']
         });
 
         res.status(200).json(developer);
+    }
+
+    public static async getAll(req: NextApiRequest, res: NextApiResponse) {
+        const levels = await LevelsModel.findAll();
+
+        res.status(200).json(levels);
     }
 }

@@ -1,10 +1,10 @@
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-import { ApiGetResponse } from '../../../common/types/commonEndpointTypes';
-import EncodeUtil from '../../../common/utils/Encode/EncodeUtil';
 import {
     ApiGetOptions,
     ApiGetWithIdOptions
-} from '../../types/frontEndpointTypes';
+} from '../../../common/types/commonEndpointTypes';
+import { GenericObject } from '../../../common/types/objectTypes';
+import EncodeUtil from '../../../common/utils/Encode/EncodeUtil';
 
 export default class FetchBibli {
     private static fetch(req: RequestInfo, init?: RequestInit) {
@@ -12,18 +12,24 @@ export default class FetchBibli {
     }
 
     private static async api(url: string, init?: RequestInit) {
-        try {
-            const res = await FetchBibli.fetch(`/api/${url}`, init);
-            return res;
-        } catch (error) {
-            return error;
-        }
+        const res = await FetchBibli.fetch(`/api/${url}`, init);
+        return res;
     }
 
-    public static async apiGetJson(
+    public static async apiPostJson(entity: string, body: GenericObject) {
+        const response = await FetchBibli.api(entity, {
+            body: JSON.stringify(body),
+            method: 'POST'
+        });
+        const json = await response.json();
+
+        return json;
+    }
+
+    public static async apiGetJson<T extends GenericObject = GenericObject>(
         entity: string,
         options?: ApiGetOptions
-    ): Promise<ApiGetResponse> {
+    ): Promise<T> {
         const queries = FetchBibli.mountQueries(options);
         const response = await FetchBibli.api(`${entity}${queries}`, {
             method: 'GET'
@@ -39,7 +45,7 @@ export default class FetchBibli {
     ) {
         const queries = FetchBibli.mountQueries(options);
 
-        FetchBibli.api(`${entity}/${id}${queries}`);
+        return FetchBibli.apiGetJson(`${entity}/${id}${queries}`);
     }
 
     private static mountQueries(options: ApiGetOptions = {}) {

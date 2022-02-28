@@ -1,7 +1,9 @@
+/* eslint-disable no-template-curly-in-string */
 import '../pages-aux/globals/globals.css';
 import type { AppProps } from 'next/app';
 import { useCallback, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { setLocale } from 'yup';
 import styles from '../pages-aux/App/App.module.css';
 import AppAppBar from '../pages-aux/App/components/AppBar/AppAppBar';
 import { ToggleMobileOpen } from '../pages-aux/App/AppTypes';
@@ -10,6 +12,19 @@ import MyBox from '../front/general-components/MyBox/MyBox';
 import { drawerWidth, footerHeight } from '../pages-aux/App/AppConsts';
 import MyToolbar from '../front/general-components/MyToolbar/MyToolbar';
 import { primaryColor } from '../front/consts/theme/themeConsts';
+
+setLocale({
+    mixed: {
+        default: 'Não é válido',
+        required: 'Campo obrigatório'
+    },
+    string: {
+        length: 'Campo precisa ter ${length} caracteres',
+        max: 'Campo pode ter no máximo ${max} caracteres',
+        min: 'Campo deve ter no mínimo ${min} caracteres',
+        email: 'Campo deve ser um e-mail válido'
+    }
+});
 
 const theme = createTheme({
     palette: {

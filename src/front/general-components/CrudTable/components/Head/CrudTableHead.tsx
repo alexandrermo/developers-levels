@@ -1,7 +1,7 @@
 import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material';
 import { ChangeEvent, useCallback } from 'react';
 import { Items } from '../../../../../common/types/commonEndpointTypes';
-import { Fields } from '../../../../types/crudComponentsTypes';
+import { FieldItem } from '../../../../types/crudComponentsTypes';
 import { Order } from '../../crudTableTypes';
 import CrudTableField from '../Field/CrudTableField';
 
@@ -9,14 +9,20 @@ interface Props {
     selectedItems: Items;
     items: Items;
     setSelectedItems: (items: Items) => void;
-    fields: Fields;
     order: Order;
     setOrder: (order: Order) => void;
+    fieldsEntries: [string, FieldItem][];
 }
 
 const CrudTableHead = (props: Props) => {
-    const { selectedItems, items, setSelectedItems, fields, order, setOrder } =
-        props;
+    const {
+        selectedItems,
+        items,
+        setSelectedItems,
+        fieldsEntries,
+        order,
+        setOrder
+    } = props;
 
     const onChangeCheckbox = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +52,7 @@ const CrudTableHead = (props: Props) => {
                         onChange={onChangeCheckbox}
                     />
                 </TableCell>
-                {Object.entries(fields).map(([property, fieldItem]) => (
+                {fieldsEntries.map(([property, fieldItem]) => (
                     <CrudTableField
                         key={property}
                         property={property}

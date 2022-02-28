@@ -5,7 +5,7 @@ import {
     SingleItem
 } from '../../../../../common/types/commonEndpointTypes';
 import ObjectUtil from '../../../../../common/utils/Object/ObjectUtil';
-import { Fields } from '../../../../types/crudComponentsTypes';
+import { FieldItem, Fields } from '../../../../types/crudComponentsTypes';
 import MyTypography from '../../../MyTypography/MyTypography';
 import { OnClickRow } from '../../crudTableTypes';
 
@@ -13,12 +13,12 @@ interface Props {
     item: SingleItem;
     selectedItems: Items;
     idProperty: string;
-    fields: Fields;
     onClickRow: OnClickRow;
+    fieldEntries: [string, FieldItem][];
 }
 
 const CrudTableItemRow = (props: Props) => {
-    const { item, selectedItems, idProperty, fields, onClickRow } = props;
+    const { item, selectedItems, idProperty, fieldEntries, onClickRow } = props;
 
     const isItemSelected = selectedItems.some(
         (singleSelectedItem) =>
@@ -41,7 +41,7 @@ const CrudTableItemRow = (props: Props) => {
                     onChange={onChangeCheckbox}
                 />
             </TableCell>
-            {Object.keys(fields).map((property) => (
+            {fieldEntries.map(([property]) => (
                 <TableCell key={property} align="center">
                     <MyTypography variant="body2">
                         {ObjectUtil.getNestedProperty(property, item)}
