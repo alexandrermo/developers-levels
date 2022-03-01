@@ -130,16 +130,26 @@ const CrudScreen: React.FunctionComponent<Props> = (props) => {
                                 <Button color="primary">Novo</Button>
                             </a>
                         </Link>
-                        <Link href={`${entity}/${selectedItems[0]?.id}`}>
-                            <a>
-                                <Button
-                                    color="secondary"
-                                    disabled={selectedItems.length !== 1}
-                                >
-                                    Alterar
-                                </Button>
-                            </a>
-                        </Link>
+                        {selectedItems.length !== 1 ? (
+                            <Button
+                                color="secondary"
+                                disabled={selectedItems.length !== 1}
+                            >
+                                Alterar
+                            </Button>
+                        ) : (
+                            <Link href={`${entity}/${selectedItems[0]?.id}`}>
+                                <a>
+                                    <Button
+                                        color="secondary"
+                                        disabled={selectedItems.length !== 1}
+                                    >
+                                        Alterar
+                                    </Button>
+                                </a>
+                            </Link>
+                        )}
+
                         <Button
                             color="error"
                             disabled={!selectedItems.length}
