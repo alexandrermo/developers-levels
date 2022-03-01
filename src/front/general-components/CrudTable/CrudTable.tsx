@@ -56,10 +56,13 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
     const onPageChange = useCallback(
         async (event, newPageIndex: number) => {
             setLoading(true);
-            const response = await endpointGet({ page: newPageIndex + 1 });
+            const response = await endpointGet({
+                page: newPageIndex + 1,
+                order: [[order?.property, order?.direction]]
+            });
             updateStatesFromResponse(response);
         },
-        [endpointGet, setLoading, updateStatesFromResponse]
+        [endpointGet, setLoading, updateStatesFromResponse, order]
     );
 
     const labelDisplayedRows = useCallback(
