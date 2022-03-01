@@ -17,6 +17,9 @@ export const levelsFields: Fields = {
     },
     'developers.length': {
         label: 'Quantidade Desenvolvedores',
+        table: {
+            notOrder: true
+        },
         form: {
             hidden: true
         }

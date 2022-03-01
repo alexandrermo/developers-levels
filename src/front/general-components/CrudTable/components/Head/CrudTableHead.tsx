@@ -1,7 +1,11 @@
 import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material';
 import { ChangeEvent, useCallback } from 'react';
 import { Items } from '../../../../../common/types/commonEndpointTypes';
-import { FieldItem } from '../../../../types/crudComponentsTypes';
+import {
+    FieldItem,
+    UpdateStatesFromResponse
+} from '../../../../types/crudComponentsTypes';
+import { ApiGet } from '../../../../types/frontEndpointTypes';
 import { Order } from '../../crudTableTypes';
 import CrudTableField from '../Field/CrudTableField';
 
@@ -12,6 +16,10 @@ interface Props {
     order: Order;
     setOrder: (order: Order) => void;
     fieldsEntries: [string, FieldItem][];
+    endpointGet: ApiGet;
+    updateStatesFromResponse: UpdateStatesFromResponse;
+    setLoading: (loading: boolean) => void;
+    setCurrentPage: (page: number) => void;
 }
 
 const CrudTableHead = (props: Props) => {
@@ -21,7 +29,11 @@ const CrudTableHead = (props: Props) => {
         setSelectedItems,
         fieldsEntries,
         order,
-        setOrder
+        setOrder,
+        endpointGet,
+        updateStatesFromResponse,
+        setLoading,
+        setCurrentPage
     } = props;
 
     const onChangeCheckbox = useCallback(
@@ -59,6 +71,10 @@ const CrudTableHead = (props: Props) => {
                         field={fieldItem}
                         order={order}
                         setOrder={setOrder}
+                        endpointGet={endpointGet}
+                        setLoading={setLoading}
+                        updateStatesFromResponse={updateStatesFromResponse}
+                        setCurrentPage={setCurrentPage}
                     />
                 ))}
             </TableRow>

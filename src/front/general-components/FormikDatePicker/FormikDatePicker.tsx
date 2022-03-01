@@ -24,6 +24,7 @@ const FormikDatePicker: React.FunctionComponent<Props> = (props) => {
         (params) => (
             <TextField
                 {...params}
+                fullWidth
                 onBlur={field.onBlur}
                 error={touchError}
                 helperText={helperTextFormik}

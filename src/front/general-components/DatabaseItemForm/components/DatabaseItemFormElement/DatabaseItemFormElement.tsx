@@ -16,7 +16,7 @@ const DatabaseItemFormElement: React.FunctionComponent<Props> = (props) => {
     const { required, disabled } = form || {};
 
     return (
-        <MyGrid item xs={12} sm={6} md={3} lg={2}>
+        <MyGrid item xs={12} sm={6} md={4}>
             {(!field.type || field.type === 'default') && (
                 <FormikTextFieldDefault
                     required={required}

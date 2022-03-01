@@ -22,7 +22,11 @@ export const developersFields: Fields = {
         form: { required: true }
     },
     hobby: { label: 'Hobby' },
-    'level.description': { label: 'Nível', form: { hidden: true } },
+    'level.description': {
+        label: 'Nível',
+        form: { hidden: true },
+        table: { notOrder: true }
+    },
     levelId: {
         label: 'Nível',
         type: 'select',

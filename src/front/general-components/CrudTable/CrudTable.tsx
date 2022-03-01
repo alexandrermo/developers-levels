@@ -23,10 +23,13 @@ interface Props {
     endpointGet: ApiGet;
     setLoading: (loading: boolean) => void;
     currentPage: number;
+    setCurrentPage: (page: number) => void;
     totalQuantityOfItems: number | undefined;
     updateStatesFromResponse: UpdateStatesFromResponse;
     selectedItems: SingleItem[];
     setSelectedItems: Dispatch<SetStateAction<Items>>;
+    order: Order | {};
+    setOrder: (order: Order) => void;
 }
 
 const CrudTable: React.FunctionComponent<Props> = (props) => {
@@ -40,14 +43,15 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
         totalQuantityOfItems,
         updateStatesFromResponse,
         selectedItems,
-        setSelectedItems
+        setSelectedItems,
+        setCurrentPage,
+        order,
+        setOrder
     } = props;
 
     const tableFieldsEntries = Object.entries(fields).filter(
         ([, fieldItem]) => !fieldItem.table?.hidden
     );
-
-    const [order, setOrder] = useState<Order>({});
 
     const onPageChange = useCallback(
         async (event, newPageIndex: number) => {
@@ -56,6 +60,11 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
             updateStatesFromResponse(response);
         },
         [endpointGet, setLoading, updateStatesFromResponse]
+    );
+
+    const labelDisplayedRows = useCallback(
+        ({ from, to, count }) => `${from}–${to} de ${count}`,
+        []
     );
 
     const onClickRow = useCallback<OnClickRow>(
@@ -101,6 +110,10 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                         setSelectedItems={setSelectedItems}
                         order={order}
                         setOrder={setOrder}
+                        endpointGet={endpointGet}
+                        updateStatesFromResponse={updateStatesFromResponse}
+                        setLoading={setLoading}
+                        setCurrentPage={setCurrentPage}
                     />
 
                     <TableBody>
@@ -125,6 +138,7 @@ const CrudTable: React.FunctionComponent<Props> = (props) => {
                     page={currentPage - 1}
                     onPageChange={onPageChange}
                     rowsPerPageOptions={[5]}
+                    labelDisplayedRows={labelDisplayedRows}
                 />
             )}
         </>

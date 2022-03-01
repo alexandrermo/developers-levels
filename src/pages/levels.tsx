@@ -8,6 +8,7 @@ import {
     levelsEntity,
     levelsFields
 } from '../front/consts/developers/levelsConts';
+import { Order } from '../front/general-components/CrudTable/crudTableTypes';
 
 const Levels = () => {
     const [levels, setLevels] = useState<GenericObject[]>([]);
@@ -15,6 +16,10 @@ const Levels = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalQuantityOfItems, setTotalQuantityOfItems] = useState<number>();
     const [selectedItems, setSelectedItems] = useState<Items>([]);
+    const [order, setOrder] = useState<Order>({
+        property: 'id',
+        direction: 'asc'
+    });
 
     const updateStatesFromResponse = useCallback(
         (response: ApiGetResponse) => {
@@ -48,6 +53,9 @@ const Levels = () => {
                 updateStatesFromResponse={updateStatesFromResponse}
                 selectedItems={selectedItems}
                 setSelectedItems={setSelectedItems}
+                setCurrentPage={setCurrentPage}
+                setOrder={setOrder}
+                order={order}
             />
         </CrudScreen>
     );

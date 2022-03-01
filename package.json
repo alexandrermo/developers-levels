@@ -3,10 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "node ./customStart.ts",
+        "start": "next start",
         "dev": "next dev",
         "build": "next build",
-        "nex-start": "next start",
         "lint": "eslint src --ext .ts,.tsx"
     },
     "dependencies": {

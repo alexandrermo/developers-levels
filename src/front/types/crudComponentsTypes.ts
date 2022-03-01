@@ -20,6 +20,7 @@ export interface FieldItem {
     getOptionsApi?: FilterItemGetOptionsApi;
     table?: {
         hidden?: boolean;
+        notOrder?: boolean;
     };
     form?: {
         required?: boolean;

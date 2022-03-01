@@ -4,7 +4,11 @@ import DevelopersEndpoint from '../front/endpoints/Developers/DevelopersEndpoint
 import CrudTable from '../front/general-components/CrudTable/CrudTable';
 import { ApiGetResponse, Items } from '../common/types/commonEndpointTypes';
 import CrudScreen from '../front/general-components/CrudScreen/CrudScreen';
-import { developersEntity } from '../front/consts/developers/developersConts';
+import {
+    developersEntity,
+    developersFields
+} from '../front/consts/developers/developersConts';
+import { Order } from '../front/general-components/CrudTable/crudTableTypes';
 
 const Developers = () => {
     const [developers, setDevelopers] = useState<GenericObject[]>([]);
@@ -12,6 +16,10 @@ const Developers = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalQuantityOfItems, setTotalQuantityOfItems] = useState<number>();
     const [selectedItems, setSelectedItems] = useState<Items>([]);
+    const [order, setOrder] = useState<Order>({
+        property: 'id',
+        direction: 'asc'
+    });
 
     const updateStatesFromResponse = useCallback(
         (response: ApiGetResponse) => {
@@ -38,20 +46,16 @@ const Developers = () => {
             <CrudTable
                 currentPage={currentPage}
                 endpointGet={DevelopersEndpoint.get}
-                fields={{
-                    id: { label: 'ID' },
-                    name: { label: 'Nome' },
-                    sex: { label: 'Sexo' },
-                    birthday: { label: 'Dt. Nascimento' },
-                    hobby: { label: 'Hobby' },
-                    'level.description': { label: 'Nível' }
-                }}
+                fields={developersFields}
                 items={developers}
                 setLoading={setLoading}
                 totalQuantityOfItems={totalQuantityOfItems}
                 updateStatesFromResponse={updateStatesFromResponse}
                 selectedItems={selectedItems}
                 setSelectedItems={setSelectedItems}
+                setCurrentPage={setCurrentPage}
+                setOrder={setOrder}
+                order={order}
             />
         </CrudScreen>
     );
